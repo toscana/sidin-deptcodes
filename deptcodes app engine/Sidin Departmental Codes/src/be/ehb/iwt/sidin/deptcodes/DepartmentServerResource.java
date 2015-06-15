@@ -5,18 +5,30 @@ import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
-public class DepartmentServerResource extends ServerResource implements IDeptCodeResource{
+public class DepartmentServerResource extends ServerResource implements IDeptResource{
 
 	@Override
 	@Get
-	public String retrieve() {
+	public Department retrieve() {
 		Long value = Long.parseLong((String) getRequest().getAttributes().get("id"));
 		Department t = OfyService.ofy().load().type(Department.class).id(value).get();
-		if(t != null)
-			return t.getUrl();
-		else
-			return "";
+		return t;
 	}
 
+	@Override
+	@Post
+	public void store(Department t) {
+		OfyService.ofy().save().entities(t).now();
+		
+	}
+
+	@Override
+	@Delete
+	public void remove() {
+		Long value  = Long.parseLong((String)getRequest().getAttributes().get("id"));
+		Department e = OfyService.ofy().load().type(Department.class).id(value).get();
+		OfyService.ofy().delete().entity(e);
+		
+	}
 
 }

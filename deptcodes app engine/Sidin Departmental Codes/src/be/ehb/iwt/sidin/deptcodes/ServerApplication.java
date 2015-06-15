@@ -15,7 +15,7 @@ public class ServerApplication extends Application{
 		router.attach("/depts",DepartmentsServerResource.class);
 		router.attach("/dept", DepartmentServerResource.class);
 		router.attach("/dept/{id}", DepartmentServerResource.class);
-		
+		router.attach("/deptcode/{id}",DepartmentCodeServerResource.class);
 		return router;
 	}
 	
